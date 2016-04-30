@@ -7,7 +7,7 @@ use MT::Author;
 use MT::Util qw( offset_time_list );
 use File::Temp qw( tempfile );
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 use base qw( MT::Plugin );
 
@@ -18,8 +18,8 @@ my $plugin = new MT::Plugin::UploadUser ( {
     key =>  'uploaduser',
     name => 'UploadUser',
     description => '<MT_TRANS phrase=\'_PLUGIN_DESCRIPTION\'>',
-    author_name => 'Alfasado, Inc.',
-    author_link => 'http://alfasado.net/',
+    author_name => 'Alfasado, Inc. / Hideki Abe',
+    author_link => 'https://github.com/hideki-a/mt-plugin-upload-user',
     version => $VERSION,
     l10n_class => 'UploadUser::L10N',
 } );
