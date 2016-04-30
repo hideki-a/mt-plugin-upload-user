@@ -38,7 +38,7 @@ sub init_registry {
             },
         },
         callbacks => {
-            'MT::App::CMS::template_source.list_author'
+            'MT::App::CMS::template_source.list_common'
                  => \&_cb_ts_list_author,
         },
     } );
@@ -46,12 +46,17 @@ sub init_registry {
 
 sub _cb_ts_list_author {
     my ( $cb, $app, $tmpl ) = @_;
+
+    if ($app->param('_type') ne 'author') {
+        return;
+    }
+
     my $insert = &_tmpl();
     my $magic_token = 'magic_token=' . $app->current_magic;
     $insert =~ s/magic_token=/$magic_token/;
     if ( MT->version_number >= 5 ) {
         $insert = '<ul>' . $insert . '</li></ul>';
-        $$tmpl =~ s/(<div\sclass="listing\-filter">)/$insert$1/sg;
+        $$tmpl =~ s/(<div\sid="listing"\sclass="listing\sline\shas\-filter">)/$insert$1/sg;
     }else{
         $$tmpl =~ s/(<ul\sclass="action\-link\-list">.*?<\/li>).*?(<\/ul>)/$1$insert$2/sg;
     }
@@ -289,7 +294,7 @@ sub _tmpl {
         onchange="getByID( 'send_csv' ).style.display = 'inline';"
         />
         <input type="hidden" name="__mode" value="upload_user" />
-        <input type="hidden" name="return_args" value="__mode=list_user" />
+        <input type="hidden" name="return_args" value="__mode=list&amp;_type=author&amp;blog_id=0" />
         <input type="hidden" name="magic_token" value="<$mt:var name="magic_token"$>" />
         <a href="javascript:void(0)" style="display:none" id="send_csv" onclick="
         if ( getByID( 'upload' ).style.display == 'none' ) {
